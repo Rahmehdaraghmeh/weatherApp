@@ -1,11 +1,11 @@
-// server.js
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const app = express();
 
 // Middleware
-app.use(express.json()); // For parsing JSON
+app.use(express.json()); // Built-in middleware to parse JSON request bodies
+app.use(express.urlencoded({ extended: true })); // Built-in middleware to parse URL-encoded request bodies
 app.use(cors()); // Enable CORS
 app.use(express.static('website')); // Serve static files
 
@@ -19,13 +19,8 @@ app.get('/all', (req, res) => {
 
 // POST route to add data to projectData
 app.post('/add', (req, res) => {
-  
-  console.log(req.body);
-  
-  const { temp, date, feel,country} = req.body;
-  console.log('Received data on server:', req.body); // طباعة البيانات المستلمة على الخادم
-
-  projectData ={ temp, date, feel,country };
+  const { temp, date, feel, country } = req.body;
+  projectData = { temp, date, feel, country }; // Store the incoming data
   res.send({ message: 'Data successfully saved!' });
 });
 
